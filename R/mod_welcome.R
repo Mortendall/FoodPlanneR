@@ -36,9 +36,17 @@ mod_welcome_ui <- function(id) {
 #' welcome Server Functions
 #'
 #' @noRd
-mod_welcome_server <- function(id){
+mod_welcome_server <- function(id, app_data, parentsession){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
+
+    shiny::observeEvent(input$enter,{
+      shiny::updateTabsetPanel(session = parentsession,
+                               inputId = "tabset",
+                               selected = "planner"
+
+                               )
+    })
 
   })
 }

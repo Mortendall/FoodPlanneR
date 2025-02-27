@@ -10,12 +10,12 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     bslib::page_navbar(
-      bslib::nav_panel("Welcome", mod_welcome_ui("welcome_1")),
-      bslib::nav_panel("Foodplanner",mod_foodplanner_ui("foodplanner_1"))
+      id = "tabset",
+      bslib::nav_panel("Welcome", mod_welcome_ui("welcome_1"),value = "welcome"),
+      bslib::nav_panel("Foodplanner",mod_foodplanner_ui("foodplanner_1"), value = "planner")
 
-       # Remove this line to start building your UI
     )
-  )
+)
 }
 
 #' Add external Resources to the Application
