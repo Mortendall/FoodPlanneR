@@ -46,7 +46,12 @@ mod_foodplanner_ui <- function(id) {
                DT::dataTableOutput(
                  outputId = ns("meal_overview")
                )
-             ))
+             ),
+      bslib::card(
+        bslib::card_header("Groceries"),
+        shiny::uiOutput(outputId = ns("groceries"))
+
+      ))
     )
 
 }
@@ -174,9 +179,45 @@ mod_foodplanner_server <- function(id, app_data,meal_plan, parentsession){
                                          "Recipe"
       )
 
-      meal_plan$overview <- meal_plan$core_data
+    meal_plan$core_data <- select_meal(app_data,
+                                       meal_plan$core_data,
+                                       input$time1,
+                                       input$vegetarian1,
+                                       "Day1")
+    if(input$daysno>1){
+      meal_plan$core_data <- select_meal(app_data,
+                                         meal_plan$core_data,
+                                         input$time2,
+                                         input$vegetarian2,
+                                         "Day2")
+    }
+    if(input$daysno>2){
+      meal_plan$core_data <- select_meal(app_data,
+                                         meal_plan$core_data,
+                                         input$time3,
+                                         input$vegetarian3,
+                                         "Day3")
+    }
+    if(input$daysno>3){
+      meal_plan$core_data <- select_meal(app_data,
+                                         meal_plan$core_data,
+                                         input$time3,
+                                         input$vegetarian3,
+                                         "Day4")
+    }
+    if(input$daysno>4){
+      meal_plan$core_data <- select_meal(app_data,
+                                         meal_plan$core_data,
+                                         input$time5,
+                                         input$vegetarian5,
+                                         "Day5")
+    }
 
-
+      meal_plan$overview <- meal_plan$core_data |>
+        dplyr::select("Day" ,
+                      "Meal",
+                      "Time",
+                      "Recipe")
     })
 
   output$meal_overview <- DT::renderDataTable({
@@ -184,6 +225,43 @@ mod_foodplanner_server <- function(id, app_data,meal_plan, parentsession){
       DT::datatable(meal_plan$overview)
     }
   })
+
+  output$groceries <- shiny::renderUI({
+    if(input$daysno==1){
+      shiny::h4(meal_plan$core_data$Groceries[1])
+    }
+    if(input$daysno==2){
+      shiny::tagList(
+        shiny::h4(meal_plan$core_data$Groceries[1]),
+        shiny::h4(meal_plan$core_data$Groceries[2])
+      )
+    }
+    if(input$daysno==3){
+      shiny::tagList(
+        shiny::h4(meal_plan$core_data$Groceries[1]),
+        shiny::h4(meal_plan$core_data$Groceries[2]),
+        shiny::h4(meal_plan$core_data$Groceries[3])
+      )
+    }
+    if(input$daysno==4){
+      shiny::tagList(
+        shiny::h4(meal_plan$core_data$Groceries[1]),
+        shiny::h4(meal_plan$core_data$Groceries[2]),
+        shiny::h4(meal_plan$core_data$Groceries[3]),
+        shiny::h4(meal_plan$core_data$Groceries[4])
+      )
+    }
+    if(input$daysno==5){
+      shiny::tagList(
+        shiny::h4(meal_plan$core_data$Groceries[1]),
+        shiny::h4(meal_plan$core_data$Groceries[2]),
+        shiny::h4(meal_plan$core_data$Groceries[3]),
+        shiny::h4(meal_plan$core_data$Groceries[4]),
+        shiny::h4(meal_plan$core_data$Groceries[5])
+      )
+    }
+  })
+
 
   })
 }
