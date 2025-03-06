@@ -230,20 +230,20 @@ mod_foodplanner_server <- function(id, app_data,meal_plan, parentsession){
     if(input$daysno==1){
       shiny::h4(meal_plan$core_data$Groceries[1])
     }
-    if(input$daysno==2){
+    else if(input$daysno==2){
       shiny::tagList(
         shiny::h4(meal_plan$core_data$Groceries[1]),
         shiny::h4(meal_plan$core_data$Groceries[2])
       )
     }
-    if(input$daysno==3){
+    else if(input$daysno==3){
       shiny::tagList(
         shiny::h4(meal_plan$core_data$Groceries[1]),
         shiny::h4(meal_plan$core_data$Groceries[2]),
         shiny::h4(meal_plan$core_data$Groceries[3])
       )
     }
-    if(input$daysno==4){
+    else if(input$daysno==4){
       shiny::tagList(
         shiny::h4(meal_plan$core_data$Groceries[1]),
         shiny::h4(meal_plan$core_data$Groceries[2]),
@@ -251,7 +251,7 @@ mod_foodplanner_server <- function(id, app_data,meal_plan, parentsession){
         shiny::h4(meal_plan$core_data$Groceries[4])
       )
     }
-    if(input$daysno==5){
+    else if(input$daysno==5){
       shiny::tagList(
         shiny::h4(meal_plan$core_data$Groceries[1]),
         shiny::h4(meal_plan$core_data$Groceries[2]),
